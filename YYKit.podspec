@@ -23,6 +23,11 @@ Pod::Spec.new do |s|
 
   s.libraries = 'z', 'sqlite3'
   s.frameworks = 'UIKit', 'CoreFoundation', 'CoreText', 'CoreGraphics', 'CoreImage', 'QuartzCore', 'ImageIO', 'AssetsLibrary', 'Accelerate', 'MobileCoreServices', 'SystemConfiguration'
-  s.ios.vendored_frameworks = 'Vendor/WebP.framework'
+
+  # The bundled Vendor/WebP.framework is an old fat framework whose arm64
+  # slice targets physical iOS devices, not the arm64 iOS Simulator.
+  # Build libwebp from source through CocoaPods instead so both device and
+  # Apple Silicon simulator architectures are supported.
+  s.dependency 'libwebp', '~> 1.6'
 
 end
